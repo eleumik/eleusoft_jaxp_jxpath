@@ -30,6 +30,17 @@ public class TestJXPathJaxp extends TestCase
         assertTrue(f.isObjectModelSupported(JXPathXPathFactory.URI));
         
     }
+    public void testAPI_DOM()
+    {
+        XPathFactory f = getXPathFactory();
+        assertNotNull(f);
+        assertTrue(f.isObjectModelSupported(XPathConstants.DOM_OBJECT_MODEL));
+    }
+    public void testAPI_Unknown()
+    {
+        XPathFactory f = getXPathFactory();
+        assertFalse(f.isObjectModelSupported("kjhkhskhdkjsd"));
+    }
     public void testAPI_XPath() throws Exception
     {
         XPath xpath = getXPath();

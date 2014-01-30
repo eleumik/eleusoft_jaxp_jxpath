@@ -32,6 +32,8 @@ import org.apache.commons.jxpath.JXPathException;
 import org.apache.commons.jxpath.NodeSet;
 import org.apache.commons.jxpath.Pointer;
 import org.apache.commons.jxpath.Variables;
+import org.eleusoft.jaxp.common.NodeListImpl;
+import org.eleusoft.jaxp.common.XPathValues;
 import org.w3c.dom.Document;
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
