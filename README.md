@@ -21,6 +21,11 @@ Maven
        <artifactId>eleusoft_jaxp_jxpath</artifactId>
        <version>1.0.0</version>
      </dependency>
+
+Notes
+-----
+
+The package is `org.apache.commons.jxpath.jaxp`, since was initially (2007) meant to be included in JXPath, but then somehow it was not, see https://issues.apache.org/jira/browse/JXPATH-112 and [Votes](http://commons.markmail.org/message/am43vs6xtph6r5im?q=list:org.apache.commons.dev&page=1#query:list%3Aorg.apache.commons.dev+page:1+mid:am43vs6xtph6r5im+state:results)
 	
 Author
 ------
