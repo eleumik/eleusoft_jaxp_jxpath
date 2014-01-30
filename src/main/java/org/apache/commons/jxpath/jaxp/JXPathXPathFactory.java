@@ -32,6 +32,8 @@ import org.apache.commons.jxpath.JXPathException;
 import org.apache.commons.jxpath.NodeSet;
 import org.apache.commons.jxpath.Pointer;
 import org.apache.commons.jxpath.Variables;
+import org.eleusoft.jaxp.common.AbstractResolvers;
+import org.eleusoft.jaxp.common.AbstractXPathFactory;
 import org.eleusoft.jaxp.common.NodeListImpl;
 import org.eleusoft.jaxp.common.XPathValues;
 import org.w3c.dom.Document;
@@ -52,49 +54,14 @@ import org.xml.sax.SAXException;
  * <p>
  * @author Michele Vivoda
  */
-public class JXPathXPathFactory extends XPathFactory
+public class JXPathXPathFactory extends AbstractXPathFactory
 {
     /**
      * URI of the JXPath object model.
      */
     public static final String URI =
         "http://commons.apache.org/jxpath";
-    /**
-     * Per - factory resolver.
-     */
-    private XPathVariableResolver variableResolver;
-    /**
-     * Per - factory resolver.
-     */
-    private XPathFunctionResolver functionResolver;
-    /**
-     * Whether secure processing is on.
-     */
-    private boolean secure;
-    /*
-     * (non-Javadoc)
-     * @see javax.xml.xpath.XPathFactory#getFeature(java.lang.String)
-     */
-    public boolean getFeature(final String name) throws XPathFactoryConfigurationException
-    {
-        if (name.equals(XMLConstants.FEATURE_SECURE_PROCESSING))
-        {
-            return this.secure;
-        }
-        else throw new  XPathFactoryConfigurationException("Unsupported feature:" + name);
-    }
-    /*
-     * (non-Javadoc)
-     * @see javax.xml.xpath.XPathFactory#setFeature(java.lang.String, boolean)
-     */
-    public void setFeature(final String name, final boolean arg1) throws XPathFactoryConfigurationException
-    {
-        if (name.equals(XMLConstants.FEATURE_SECURE_PROCESSING))
-        {
-            this.secure = arg1;
-        }
-        else throw new XPathFactoryConfigurationException("Unsupported feature:" + name);
-    }
+ 
     /*
      * (non-Javadoc)
      * @see javax.xml.xpath.XPathFactory#isObjectModelSupported(java.lang.String)
@@ -112,32 +79,13 @@ public class JXPathXPathFactory extends XPathFactory
     {
         return new XPathImpl(variableResolver, functionResolver, secure);
     }
-    /*
-     * (non-Javadoc)
-     * @see javax.xml.xpath.XPathFactory#setXPathFunctionResolver(javax.xml.xpath.XPathFunctionResolver)
-     */
-    public void setXPathFunctionResolver(final XPathFunctionResolver obj)
-    {
-        this.functionResolver = obj;
-    }
-    /*
-     * (non-Javadoc)
-     * @see javax.xml.xpath.XPathFactory#setXPathVariableResolver(javax.xml.xpath.XPathVariableResolver)
-     */
-    public void setXPathVariableResolver(final XPathVariableResolver obj)
-    {
-        this.variableResolver = obj;
-    }
+    
     /**
      * Baseclass for {@link XPathImpl} and {@link XPathExpressionImpl}.
      */
-    private static class ResolversSupport
+    private static class ResolversSupport extends AbstractResolvers
     {
-        protected XPathVariableResolver variableResolver;
-        protected XPathFunctionResolver functionResolver;
-        protected NamespaceContext nsContext;
-        protected final boolean secure;
-
+        
         /**
          * Constructor for subclasses.
          * @param vr optional {@link XPathVariableResolver}
@@ -148,9 +96,7 @@ public class JXPathXPathFactory extends XPathFactory
                                    final XPathFunctionResolver fr,
                                    final boolean secure)
         {
-            this.variableResolver = vr;
-            this.functionResolver = fr;
-            this.secure = secure;
+            super(vr,fr,secure);
         }
         /**
          * Returns a new, configured, instance of JXPathContext
@@ -177,59 +123,7 @@ public class JXPathXPathFactory extends XPathFactory
             }
             return ctx;
         }
-        /*
-         * (non-Javadoc)
-         * @see javax.xml.xpath.XPath#getNamespaceContext()
-         */
-        public NamespaceContext getNamespaceContext()
-        {
-            return nsContext;
-        }
-        /*
-         * (non-Javadoc)
-         * @see javax.xml.xpath.XPath#getXPathFunctionResolver()
-         */
-        public XPathFunctionResolver getXPathFunctionResolver()
-        {
-            return functionResolver;
-        }
-        /*
-         * (non-Javadoc)
-         * @see javax.xml.xpath.XPath#getXPathVariableResolver()
-         */
-        public XPathVariableResolver getXPathVariableResolver()
-        {
-            return variableResolver;
-        }
-        /*
-         * (non-Javadoc)
-         * @see javax.xml.xpath.XPath#setNamespaceContext(javax.xml.namespace.NamespaceContext)
-         */
-        public void setNamespaceContext(final NamespaceContext ns)
-        {
-            if (ns==null) throw new NullPointerException("Null namespace context");
-            this.nsContext = ns;
-        }
-        /*
-         * (non-Javadoc)
-         * @see javax.xml.xpath.XPath#setXPathFunctionResolver(javax.xml.xpath.XPathFunctionResolver)
-         */
-        public void setXPathFunctionResolver(final XPathFunctionResolver resolver)
-        {
-            if (resolver==null) throw new NullPointerException("Null function resolver");
-            this.functionResolver = resolver;
-        }
-        /*
-         * (non-Javadoc)
-         * @see javax.xml.xpath.XPath#setXPathVariableResolver(javax.xml.xpath.XPathVariableResolver)
-         */
-        public void setXPathVariableResolver(final XPathVariableResolver resolver)
-        {
-            if (resolver==null) throw new NullPointerException("Null variable resolver");
-            this.variableResolver= resolver;
-
-        }
-
+        
         private static class VariablesImpl implements Variables
         {
             /**
