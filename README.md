@@ -9,7 +9,7 @@ This package is an implementation of the [JAXP](http://en.wikipedia.org/wiki/Jav
 Related Projects
 ----------------
 
-[eleusoft_jaxp_tests](https://github.com/eleumik/eleusoft_jaxp_tests) - JAXP XPath Test Suite
+[eleusoft_jaxp_xpath_tests](https://github.com/eleumik/eleusoft_jaxp_xpath_tests) - JAXP XPath Test Suite
 
 [eleusoft_jaxp_jaxen](https://github.com/eleumik/eleusoft_jaxp_jaxen) - JAXP XPath for Jaxen
 
