@@ -549,7 +549,8 @@ public class JXPathXPathFactory extends AbstractXPathFactory
             return factory.newDocumentBuilder();
         }
         catch (ParserConfigurationException e) {
-            throw new Error("JAXP config error:" + e.getMessage(), e);
+            e.printStackTrace();
+            throw new Error("JAXP config error:" + e.getMessage());
         }
 
     }
